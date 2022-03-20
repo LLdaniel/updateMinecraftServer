@@ -28,7 +28,9 @@ else
     then
 	wget -P ~/Downloads https://minecraft.azureedge.net/bin-linux/bedrock-server-$2.zip
     else
-	wget -P ~/Downloads https://launcher.mojang.com/v1/objects/a16d67e5807f57fc4e550299cf20226194497dc2/server.jar
+	# sadly the hash is different for every update, last one was: https://launcher.mojang.com/v1/objects/a16d67e5807f57fc4e550299cf20226194497dc2/server.jar
+	# 1.18.2
+        wget -P ~/Downloads https://launcher.mojang.com/v1/objects/c8f83c5655308435b3dcf03c06d9fe8740a77469/server.jar
     fi
     
     # unzip it and remove the download file
