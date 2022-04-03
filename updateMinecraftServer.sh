@@ -30,7 +30,10 @@ else
     else
 	# sadly the hash is different for every update, last one was: https://launcher.mojang.com/v1/objects/a16d67e5807f57fc4e550299cf20226194497dc2/server.jar
 	# 1.18.2
-        wget -P ~/Downloads https://launcher.mojang.com/v1/objects/c8f83c5655308435b3dcf03c06d9fe8740a77469/server.jar
+        #wget -P ~/Downloads https://launcher.mojang.com/v1/objects/c8f83c5655308435b3dcf03c06d9fe8740a77469/server.jar
+	# new dynamic variant: mimic a browser call with curl and evaluate the regex with grep:
+	URL=`curl 'https://www.minecraft.net/en-us/download/server' -s -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36' | grep -Eo '<a href="https://launcher.mojang.com/.*/server.jar"' | grep -Eo 'https.*.jar'`
+	wget -P ~/Downloads ${URL}
     fi
     
     # unzip it and remove the download file
