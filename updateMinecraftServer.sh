@@ -72,7 +72,7 @@ else
 	    cp ~/Desktop/Minecraft$servertype-$1/ops.json ~/Desktop/Minecraft$servertype-$2/
 	    cp ~/Desktop/Minecraft$servertype-$1/usercache.json ~/Desktop/Minecraft$servertype-$2/
 	    cp -r ~/Desktop/Minecraft$servertype-$1/SandysWorld ~/Desktop/Minecraft$servertype-$2/
-	    cp ~/Desktop/Minecraft$servertype-$1/start ~/Desktop/Minecraft$servertype-$2/
+	    cp ~/Desktop/Minecraft$servertype-$1/start.sh ~/Desktop/Minecraft$servertype-$2/
 	fi
 	### move this manually due to frequent changes
 	# cp ~/Desktop/Minecraft$servertype-$1/server.properties ~/Desktop/Minecraft$servertype-$2/
