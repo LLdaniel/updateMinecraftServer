@@ -9,7 +9,9 @@ function usage(){
     echo '  -t <type>               type "bedrock" for bedrock, type "java" for java server (default "java")'
 }
 
-function update(){    
+function update(){
+    url=""
+    
     # is new tag specified otherwise take newest server version
     if [[ -z $newtag ]]
     then
@@ -31,12 +33,12 @@ function update(){
 
     # Download new version
     echo -e "\e[33mDownloading...\e[0m"
-    if [[ $severtype == "bedrock" ]]
+    if [[ $servertype == "bedrock" ]]
     then
 	wget -P ~/Downloads https://minecraft.azureedge.net/bin-linux/bedrock-server-$newtag.zip
     else
 	# new dynamic variant: mimic a browser call with curl and evaluate the regex with grep:
-	download=$(curl '$url' -s -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36' | grep -Eo 'https://piston-data.mojang.com/v1/objects/.*/server.jar')
+	download=$(curl $url -s -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36' | grep -Eo 'https://piston-data.mojang.com/v1/objects/.*/server.jar')
 	wget -P ~/Downloads ${download}
     fi
     
