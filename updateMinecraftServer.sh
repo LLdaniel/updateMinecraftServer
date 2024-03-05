@@ -9,22 +9,21 @@ function usage(){
     echo '  -t <type>               type "bedrock" for bedrock, type "java" for java server (default "java")'
 }
 
-function update(){
-    url=""
-
+function update(){    
     # is new tag specified otherwise take newest server version
     if [[ -z $newtag ]]
     then
 	if [[ $servertype == "java" ]]
 	then
-	    url="https://www.minecraft.net/en-us/download/server"
-	    newtag=$(curl '$url' -s -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36' | grep -Eo 'minecraft_server.[0-9,\.]*.jar' -m 1 | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
+	    url=https://www.minecraft.net/en-us/download/server
+	    newtag=$(curl $url -s -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36' | grep -Eo 'minecraft_server.[0-9,\.]*.jar' -m 1 | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
 	else
-	    url="https://www.minecraft.net/en-us/download/server/bedrock"
-	    newtag=$(curl '$url' -s -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36' | grep -oE 'bedrock-server-[0-9,\.]+' -m 1 | grep -oE '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+')
+	    url=https://www.minecraft.net/en-us/download/server/bedrock
+	    newtag=$(curl $url -s -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36' | grep -Eo 'bedrock-server-[0-9,\.]+' -m 1 | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+')
+	    echo "$newtag"
 	fi
     fi
-
+    echo "$newtag"
     # main routine
     echo -e "\e[33mUpdating Minecraft $servertype Server\e[0m"
     echo -e "\e[33mCurrent version: $oldtag\e[0m"
@@ -90,6 +89,7 @@ function update(){
 
 hasOldTag=false
 isH=false
+servertype="java"
 while getopts 'ht:o:n:' OPTION; do
     case "$OPTION" in
 	h)
@@ -102,7 +102,7 @@ while getopts 'ht:o:n:' OPTION; do
 	    then
 		echo "Update process canceled. $servertype is not a correct server type."
 	    fi
-		
+	    
 	    ;;
 	o)
 	    oldtag="$OPTARG"
