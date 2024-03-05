@@ -6,12 +6,11 @@ function usage(){
     echo "Usage:"
     echo "updateMinecraftServer.sh -o <old_version_tag> [-n <new_version_tag>] [-t <type>]"
     echo '  -n <new_version_tag>    new version tag update to (default will be newest tag)'
-    echo '  -t <type>               type "Bedrock" for bedrock, type "Java" for java server (default "Java")'
+    echo '  -t <type>               type "bedrock" for bedrock, type "java" for java server (default "Java")'
 }
 
 function update(){
     url=""
-    
     # is new tag specified otherwise take newest server version
     if [[ -z $newtag ]]
     then
@@ -22,10 +21,9 @@ function update(){
 	else
 	    url=https://www.minecraft.net/en-us/download/server/bedrock
 	    newtag=$(curl $url -s -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36' | grep -Eo 'bedrock-server-[0-9,\.]+' -m 1 | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+')
-	    echo "$newtag"
 	fi
     fi
-    echo "$newtag"
+    
     # main routine
     echo -e "\e[33mUpdating Minecraft $servertype Server\e[0m"
     echo -e "\e[33mCurrent version: $oldtag\e[0m"
@@ -60,38 +58,37 @@ function update(){
 	sed -i s/false/true/g eula.txt
     fi
     echo -e "\e[33mNew properties file:\e[0m"
-    cat ~/Desktop/Minecraft$servertype-$newtag/server.properties
+    cat ~/Desktop/Minecraft${servertype^}-$newtag/server.properties
     read -p $'\e[33mAccept to merge properties file manually [y/n]?\e[0m ' SERVPROP
     if [ $SERVPROP == "y" ]
     then
 	# copy old files to new server
 	echo ""
 	echo -e "\e[33mCopying worlds and packs...\e[0m"
-	cp ~/Desktop/Minecraft$servertype-$oldtag/whitelist.json ~/Desktop/Minecraft$servertype-$newtag/
+	cp ~/Desktop/Minecraft${servertype^}-$oldtag/whitelist.json ~/Desktop/Minecraft${servertype^}-$newtag/
 	if [[ $servertype == "bedrock" ]]
 	then
-	    cp ~/Desktop/Minecraft$servertype-$oldtag/permissions.json ~/Desktop/Minecraft$servertype-$newtag/
-	    cp -r ~/Desktop/Minecraft$servertype-$oldtag/worlds ~/Desktop/Minecraft$servertype-$newtag/
-	    cp -r ~/Desktop/Minecraft$servertype-$oldtag/resource_packs/SweetDreamsShader2.0 ~/Desktop/Minecraft$servertype-$newtag/resource_packs/
-	    cp ~/Desktop/Minecraft$servertype-$oldtag/howto.txt ~/Desktop/Minecraft$servertype-$newtag/
+	    cp ~/Desktop/Minecraft${servertype^}-$oldtag/permissions.json ~/Desktop/Minecraft${servertype^}-$newtag/
+	    cp -r ~/Desktop/Minecraft${servertype^}-$oldtag/worlds ~/Desktop/Minecraft${servertype^}-$newtag/
+	    cp -r ~/Desktop/Minecraft${servertype^}-$oldtag/resource_packs/SweetDreamsShader2.0 ~/Desktop/Minecraft${servertype^}-$newtag/resource_packs/
+	    cp ~/Desktop/Minecraft${servertype^}-$oldtag/howto.txt ~/Desktop/Minecraft${servertype^}-$newtag/
 	else
-	    cp ~/Desktop/Minecraft$servertype-$oldtag/ops.json ~/Desktop/Minecraft$servertype-$newtag/
-	    cp ~/Desktop/Minecraft$servertype-$oldtag/usercache.json ~/Desktop/Minecraft$servertype-$newtag/
-	    cp -r ~/Desktop/Minecraft$servertype-$oldtag/SandysWorld ~/Desktop/Minecraft$servertype-$newtag/
-	    cp ~/Desktop/Minecraft$servertype-$oldtag/start.sh ~/Desktop/Minecraft$servertype-$newtag/
+	    cp ~/Desktop/Minecraft${servertype^}-$oldtag/ops.json ~/Desktop/Minecraft${servertype^}-$newtag/
+	    cp ~/Desktop/Minecraft${servertype^}-$oldtag/usercache.json ~/Desktop/Minecraft${servertype^}-$newtag/
+	    cp -r ~/Desktop/Minecraft${servertype^}-$oldtag/SandysWorld ~/Desktop/Minecraft${servertype^}-$newtag/
+	    cp ~/Desktop/Minecraft${servertype^}-$oldtag/start.sh ~/Desktop/Minecraft${servertype^}-$newtag/
 	fi
 	### move this manually due to frequent changes
-	# cp ~/Desktop/Minecraft$servertype-$oldtag/server.properties ~/Desktop/Minecraft$servertype-$newtag/
+	# cp ~/Desktop/Minecraft${servertype^}-$oldtag/server.properties ~/Desktop/Minecraft${servertype^}-$newtag/
 	echo -e "\e[33mUpdate successfull! Reminder: Change properties file manually!\e[0m"
     else
 	echo "Update process canceled."
-	rm -r ~/Desktop/Minecraft$servertype-$newtag/
+	rm -r ~/Desktop/Minecraft${servertype^}-$newtag/
     fi
 }
 
 hasOldTag=false
 isH=false
-servertype="Java"
 while getopts 'ht:o:n:' OPTION; do
     case "$OPTION" in
 	h)
@@ -100,7 +97,7 @@ while getopts 'ht:o:n:' OPTION; do
 	
 	t)
 	    servertype="$OPTARG"
-	    if [[ $servertype != "Java" ]] && [[ $servertype != "Bedrock" ]]
+	    if [[ $servertype != "java" ]] && [[ $servertype != "bedrock" ]]
 	    then
 		echo "Update process canceled. $servertype is not a correct server type."
 	    fi
