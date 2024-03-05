@@ -7,6 +7,7 @@ function usage(){
     echo "updateMinecraftServer.sh -o <old_version_tag> [-n <new_version_tag>] [-t <type>]"
     echo '  -n <new_version_tag>    new version tag update to (default will be newest tag)'
     echo '  -t <type>               type "bedrock" for bedrock, type "java" for java server (default "Java")'
+    exit 0
 }
 
 function update(){
@@ -100,6 +101,7 @@ while getopts 'ht:o:n:' OPTION; do
 	    if [[ $servertype != "java" ]] && [[ $servertype != "bedrock" ]]
 	    then
 		echo "Update process canceled. $servertype is not a correct server type."
+		exit 1
 	    fi
 	    
 	    ;;
