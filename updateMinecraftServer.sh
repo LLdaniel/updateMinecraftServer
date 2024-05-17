@@ -59,7 +59,7 @@ function update(){
 	sed -i s/false/true/g eula.txt
     fi
     echo -e "\e[33mNew properties file:\e[0m"
-    cat ~/Desktop/Minecraft${servertype^}-$newtag/server.properties
+    diff -u --color ~/Desktop/Minecraft${servertype^}-$oldtag/server.properties ~/Desktop/Minecraft${servertype^}-$newtag/server.properties
     read -p $'\e[33mAccept to merge properties file manually [y/n]?\e[0m ' SERVPROP
     if [ $SERVPROP == "y" ]
     then
