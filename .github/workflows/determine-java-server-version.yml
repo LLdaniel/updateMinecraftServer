@@ -8,7 +8,9 @@ jobs:
    - name: Checkout 
      uses: actions/checkout@v4
    - name: Install Xorg
-     run: sudo apt update && sudo apt upgrade -y && sudo apt install xorg
+     run: sudo apt update && sudo apt upgrade -y && sudo apt install xvfb
+   - name: Setting up virtual framebuffer
+     run: sudo Xvfb :4
    - name: Setting permissions to execute script
      run: chmod u+x start-mc-launcher.sh
    - name: Start minecraft launcher and write new version file
