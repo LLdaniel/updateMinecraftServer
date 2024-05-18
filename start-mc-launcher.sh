@@ -3,8 +3,8 @@
 # Start Minecraft Launcher to get newest java server version #
 ##############################################################
 # virtual framebuffer for launcher
-nohup Xvfb :4 &
-export DISPLAY="$(grep nameserver /etc/resolv.conf | sed 's/nameserver //'):4"
+#nohup Xvfb :4 &
+#export DISPLAY="$(grep nameserver /etc/resolv.conf | sed 's/nameserver //'):4"
 # get minecraft launcher
 wget https://launcher.mojang.com/download/Minecraft.tar.gz
 tar -xvzf Minecraft.tar.gz
@@ -15,7 +15,7 @@ then
 fi
 
 # start launcher to download newest version
-timeout -s SIGKILL 20s ./minecraft-launcher/minecraft-launcher
+timeout -s SIGKILL 20s xvfb-run ./minecraft-launcher/minecraft-launcher
 newtag=$(ls $HOME/.minecraft/versions/ | grep -E "^[0-9\.]+$")
 sha1hash=$(cat $HOME/.minecraft/versions/${newtag}/${newtag}.json | grep -Eo '"server": {"sha1": "[0-9,a-z]+"' | cut -d: -f3 | xargs)
 
