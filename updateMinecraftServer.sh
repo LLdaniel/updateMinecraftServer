@@ -17,17 +17,9 @@ function update(){
     then
 	if [[ $servertype == "java" ]]
 	then
-	    # new launcher: start the launcher and kill it after 10s. This will retrieve the current version and the json file with the download link
-	    launcher=https://launcher.mojang.com/download/Minecraft.tar.gz
-	    wget $launcher
-	    tar -xvzf Minecraft.tar.gz
-	    if [ -d "$HOME/.minecraft" ]
-	    then
-		echo -e "\e[33mClearing launcher directory...\e[0m"
-		rm -r $HOME/.minecraft
-	    fi
-	    timeout -s SIGKILL 10s ./minecraft-launcher/minecraft-launcher
-	    newtag=$(ls $HOME/.minecraft/versions/ | grep -E "^[0-9\.]+$")
+	    # extract version and sha1 from .json file
+	    newtag=$(cat java_version_latest.json | grep version | cut -d: -f2 | xargs)
+	    hashsha1=$(cat java_version_latest.json | grep sha1 | cut -d: -f2 | xargs)
 	else
 	    url=https://www.minecraft.net/en-us/download/server/bedrock
 	    newtag=$(curl $url -s -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36' | grep -Eo 'bedrock-server-[0-9,\.]+' -m 1 | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+')
@@ -46,8 +38,8 @@ function update(){
 	download=$(grep -Eo "https://piston-data.mojang.com/v1/objects/[0-9,a-z]+/server.jar" $HOME/.minecraft/versions/$newtag/$newtag.json)
 	wget -P ~/Downloads $download
     else
-	# new dynamic variant: mimic a browser call with curl and evaluate the regex with grep:
-	download=$(curl $url -s -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36' | grep -Eo 'https://piston-data.mojang.com/v1/objects/.*/server.jar')
+	# new variant: extract current version from .json file
+	download=https://piston-data.mojang.com/v1/objects/${hashsha1}/server.jar
 	wget -P ~/Downloads ${download}
     fi
     
