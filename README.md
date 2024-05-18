@@ -16,6 +16,7 @@ The default location for the server is `~/Desktop` and the default download dire
 Attention: Due to changes in the properties file I decided not to overwrite the properties file. I normally adjust them manually.
 
 ##### Note on Minecraft Launcher
+[![determine-java-server-version](https://github.com/LLdaniel/updateMinecraftServer/actions/workflows/determine-java-server-version.yml/badge.svg?branch=main)](https://github.com/LLdaniel/updateMinecraftServer/actions/workflows/determine-java-server-version.yml)
 It seems that currently there is no direct source for the java `server.jar` anymore. Therefore the GitHub action supports a time scheduled start of the Minecraft Launcher in order to retrieve the latest java version and `sha1` hash (see `java_version_latest.json`).
 
 ## Usage
