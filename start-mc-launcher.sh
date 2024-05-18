@@ -2,9 +2,6 @@
 ##############################################################
 # Start Minecraft Launcher to get newest java server version #
 ##############################################################
-# virtual framebuffer for launcher
-#nohup Xvfb :4 &
-#export DISPLAY="$(grep nameserver /etc/resolv.conf | sed 's/nameserver //'):4"
 # get minecraft launcher
 wget https://launcher.mojang.com/download/Minecraft.tar.gz
 tar -xvzf Minecraft.tar.gz
@@ -23,6 +20,6 @@ sha1hash=$(cat $HOME/.minecraft/versions/${newtag}/${newtag}.json | grep -Eo '"s
 cat <<EOF > java_version_latest.json
 {
 "version":"$newtag"
-"sha1":"  $sha1hash"
+"sha1":"$sha1hash"
 }
 EOF

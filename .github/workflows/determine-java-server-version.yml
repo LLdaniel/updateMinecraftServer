@@ -1,6 +1,8 @@
 name: determine-java-server-version
 run-name: grabbing latest java server version
-on: [push]
+on:
+ schedule:
+  - cron: 20 4 * * *
 jobs:
  run-minecraft-launcher:
   runs-on: ubuntu-latest
