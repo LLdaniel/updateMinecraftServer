@@ -2,7 +2,7 @@
 ##############################################################
 # Start Minecraft Launcher to get newest java server version #
 ##############################################################
-export DISPLAY=localhost:0.0
+export DISPLAY="$(grep nameserver /etc/resolv.conf | sed 's/nameserver //'):0"
 # get minecraft launcher
 wget https://launcher.mojang.com/download/Minecraft.tar.gz
 tar -xvzf Minecraft.tar.gz
