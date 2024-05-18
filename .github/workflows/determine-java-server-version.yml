@@ -5,13 +5,13 @@ jobs:
   run-minecraft-launcher:
     runs-on: ubuntu-latest
     steps:
-	- uses: actions/checkout@v4
-      	- name: Setting permissions to execute script
-      	- run: chmod u+x start-mc-launcher.sh
-      	- name: Start minecraft launcher and write new version file
+        - uses: actions/checkout@v4
+        - name: Setting permissions to execute script
+        - run: chmod u+x start-mc-launcher.sh
+        - name: Start minecraft launcher and write new version file
       	- run: ./start-mc-launcher.sh
       	- name: Commit and push new version
-      	- run: |
+        - run: |
       	       git config --global user.name '${{ github.actor }}'
                git config --global user.email '${{ github.actor }}@users.noreply.github.com'
                git commit -am "[automated] update java server version"
