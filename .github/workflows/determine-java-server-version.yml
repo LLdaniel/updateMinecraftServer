@@ -9,13 +9,24 @@ jobs:
   steps:
    - name: Checkout 
      uses: actions/checkout@v4
+     with:
+      fetch-depth: 2
    - name: Setting permissions to execute script
      run: chmod u+x start-mc-launcher.sh
    - name: Start minecraft launcher and write new version file
      run: ./start-mc-launcher.sh
-   - name: Commit and push new version
+   - name: Check upon diff
      run: |
-      git config --global user.name '${{ github.actor }}'
-      git config --global user.email '${{ github.actor }}@users.noreply.github.com'
-      git commit -am "[automated] update java server version"
-      git push
+      newVersionAvailable=$(git diff java_version_latest.json)
+      echo "Length of diff: ${#newVersionAvailable}"
+   - name: Commit and push new version when changed
+     run: |
+      if [ ${#newVersionAvailable} -gt 0 ]
+      then
+       git config --global user.name '${{ github.actor }}'
+       git config --global user.email '${{ github.actor }}@users.noreply.github.com'
+       git commit -am "[automated] update java server version"
+       git push
+      else
+       echo "No new Minecraft Java Edition available."
+      fi
