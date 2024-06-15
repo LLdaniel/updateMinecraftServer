@@ -16,12 +16,16 @@ jobs:
    - name: Start minecraft launcher and write new version file
      run: ./start-mc-launcher.sh
    - name: Check upon diff
+     id: check-diff
      run: |
       newVersionAvailable=$(git diff java_version_latest.json)
+      echo "DIFF_OUTPUT=${newVersionAvailable}" >> "$GITHUB_OUTPUT"
       echo "Length of diff: ${#newVersionAvailable}"
    - name: Commit and push new version when changed
+   - env:
+      DIFF_OUTPUT: ${{ steps.check-diff.outputs.DIFF_OUTPUT }}
      run: |
-      if [ ${#newVersionAvailable} -gt 0 ]
+      if [ ${#DIFF_OUTPUT} -gt 0 ]
       then
        git config --global user.name '${{ github.actor }}'
        git config --global user.email '${{ github.actor }}@users.noreply.github.com'
