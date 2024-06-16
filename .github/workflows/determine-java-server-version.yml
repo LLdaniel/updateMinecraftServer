@@ -22,7 +22,7 @@ jobs:
       echo "DIFF_OUTPUT=${newVersionAvailable}" >> "$GITHUB_OUTPUT"
       echo "Length of diff: ${#newVersionAvailable}"
    - name: Commit and push new version when changed
-   - env:
+     env:
       DIFF_OUTPUT: ${{ steps.check-diff.outputs.DIFF_OUTPUT }}
      run: |
       if [ ${#DIFF_OUTPUT} -gt 0 ]
