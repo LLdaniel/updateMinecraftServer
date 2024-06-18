@@ -35,7 +35,7 @@ function update(){
     echo -e "\e[33mDownloading...\e[0m"
     if [[ $servertype == "bedrock" ]]
     then
-	download=$(grep -Eo "https://piston-data.mojang.com/v1/objects/[0-9,a-z]+/server.jar" $HOME/.minecraft/versions/$newtag/$newtag.json)
+	download=https://minecraft.azureedge.net/bin-linux/bedrock-server-${newtag}.zip
 	wget -P ~/Downloads $download
     else
 	# new variant: extract current version from .json file
