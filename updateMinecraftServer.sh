@@ -35,7 +35,7 @@ function update(){
     echo -e "\e[33mDownloading...\e[0m"
     if [[ $servertype == "bedrock" ]]
     then
-	download=https://minecraft.azureedge.net/bin-linux/bedrock-server-${newtag}.zip
+	download=https://www.minecraft.net/bedrockdedicatedserver/bin-linux/bedrock-server-${newtag}.zip
 	wget -P ~/Downloads $download
     else
 	# new variant: extract current version from .json file
