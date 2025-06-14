@@ -1,8 +1,10 @@
 name: determine-java-server-version
 run-name: grabbing latest java server version
 on:
- schedule:
-  - cron: 20 4 * * *
+ #schedule:
+ # - cron: 20 4 * * *
+ push:
+  branches: [ fix-libopengl ]
  workflow_dispatch:
 jobs:
  run-minecraft-launcher:
