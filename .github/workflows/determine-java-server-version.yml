@@ -3,6 +3,7 @@ run-name: grabbing latest java server version
 on:
  schedule:
   - cron: 20 4 * * *
+ workflow_dispatch:
 jobs:
  run-minecraft-launcher:
   runs-on: ubuntu-latest
