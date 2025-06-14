@@ -7,6 +7,8 @@ jobs:
  run-minecraft-launcher:
   runs-on: ubuntu-latest
   steps:
+   - name: Install libopengl0 with apt
+     run: sudo apt update && sudo apt upgrade -y && sudo apt install libopengl0 -y
    - name: Checkout 
      uses: actions/checkout@v4
      with:
