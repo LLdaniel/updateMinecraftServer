@@ -21,8 +21,8 @@ function update(){
 	    newtag=$(cat java_version_latest.json | grep version | cut -d: -f2 | xargs)
 	    hashsha1=$(cat java_version_latest.json | grep sha1 | cut -d: -f2 | xargs)
 	else
-	    url=https://www.minecraft.net/en-us/download/server/bedrock
-	    newtag=$(curl $url -s -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36' | grep -Eo 'bedrock-server-[0-9,\.]+' -m 1 | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+')
+	    url=https://net-secondary.web.minecraft-services.net/api/v1.0/download/links
+	    newtag=$(curl $url -s -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36' | grep -Eo  "bin-linux/bedrock-server-[0-9,\.]+" | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+')
 	fi
     fi
     
