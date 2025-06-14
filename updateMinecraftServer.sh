@@ -40,7 +40,7 @@ function update(){
     else
 	# new variant: extract current version from .json file
 	download=https://piston-data.mojang.com/v1/objects/${hashsha1}/server.jar
-	wget -P ~/Downloads ${download}
+	wget --user-agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36" -P ~/Downloads ${download}
     fi
     
     # unzip it and remove the download file
